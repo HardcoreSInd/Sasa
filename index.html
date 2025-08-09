@@ -3,285 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catur Kapal Emosi</title>
+    <title>Emoji Russian Roulette</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            text-align: center;
             background-color: #f0f0f0;
             padding: 20px;
         }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
+        .game-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        
-        .chess-board {
-            display: grid;
-            grid-template-columns: repeat(8, 60px);
-            grid-template-rows: repeat(8, 60px);
-            gap: 1px;
-            border: 3px solid #333;
-            background-color: #333;
-        }
-        
-        .square {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        .white {
-            background-color: #f0d9b5;
-        }
-        
-        .black {
-            background-color: #b58863;
-        }
-        
-        .selected {
-            background-color: rgba(0, 255, 0, 0.5);
-        }
-        
-        .possible-move {
-            background-color: rgba(0, 0, 255, 0.3);
-        }
-        
-        .turn-indicator {
+        .revolver {
+            font-size: 50px;
             margin: 20px 0;
+        }
+        button {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #cc0000;
+        }
+        .result {
             font-size: 24px;
-            font-weight: bold;
+            margin: 20px 0;
+            min-height: 36px;
         }
-        
-        .white-turn {
-            color: #333;
-        }
-        
-        .black-turn {
-            color: #b58863;
+        .stats {
+            margin-top: 20px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <h1>🎮 Catur Kapal Emosi 🎮</h1>
-    <div class="turn-indicator white-turn">Giliran: Pemain Putih (🟢)</div>
-    <div class="chess-board" id="chessBoard"></div>
-    <div id="status"></div>
+    <div class="game-container">
+        <h1>🔫 Russian Roulette 🔫</h1>
+        <div class="revolver" id="revolver">🎯🎯🎯🎯🎯🎯</div>
+        <div class="result" id="result"></div>
+        <button id="spin">Spin Cylinder</button>
+        <button id="pull">Pull Trigger</button>
+        <div class="stats">
+            <p>Bullets: <span id="bullets">1</span>/6</p>
+            <p>Attempts: <span id="attempts">0</span></p>
+            <p>Survived: <span id="survived">0</span></p>
+        </div>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const board = document.getElementById('chessBoard');
-            const status = document.getElementById('status');
-            const turnIndicator = document.querySelector('.turn-indicator');
-            
-            let selectedPiece = null;
-            let currentPlayer = 'white';
-            let gameState = initializeBoard();
-            
-            // Inisialisasi papan
-            function initializeBoard() {
-                const boardState = Array(8).fill().map(() => Array(8).fill(null));
-                
-                // Pion
-                for (let i = 0; i < 8; i++) {
-                    boardState[1][i] = { type: 'pawn', player: 'black', symbol: '🚤', emoji: '🚤🔴' };
-                    boardState[6][i] = { type: 'pawn', player: 'white', symbol: '🚤', emoji: '🚤🟢' };
-                }
-                
-                // Benteng
-                boardState[0][0] = boardState[0][7] = { type: 'rook', player: 'black', symbol: '🚢', emoji: '🚢🔴' };
-                boardState[7][0] = boardState[7][7] = { type: 'rook', player: 'white', symbol: '🚢', emoji: '🚢🟢' };
-                
-                // Kuda
-                boardState[0][1] = boardState[0][6] = { type: 'knight', player: 'black', symbol: '🛶', emoji: '🛶🔴' };
-                boardState[7][1] = boardState[7][6] = { type: 'knight', player: 'white', symbol: '🛶', emoji: '🛶🟢' };
-                
-                // Gajah
-                boardState[0][2] = boardState[0][5] = { type: 'bishop', player: 'black', symbol: '⛵', emoji: '⛵🔴' };
-                boardState[7][2] = boardState[7][5] = { type: 'bishop', player: 'white', symbol: '⛵', emoji: '⛵🟢' };
-                
-                // Menteri
-                boardState[0][3] = { type: 'queen', player: 'black', symbol: '🚀', emoji: '🚀🔴' };
-                boardState[7][3] = { type: 'queen', player: 'white', symbol: '🚀', emoji: '🚀🟢' };
-                
-                // Raja
-                boardState[0][4] = { type: 'king', player: 'black', symbol: '✈️', emoji: '✈️🔴' };
-                boardState[7][4] = { type: 'king', player: 'white', symbol: '✈️', emoji: '✈️🟢' };
-                
-                return boardState;
+        const revolver = document.getElementById('revolver');
+        const result = document.getElementById('result');
+        const spinBtn = document.getElementById('spin');
+        const pullBtn = document.getElementById('pull');
+        const bulletsDisplay = document.getElementById('bullets');
+        const attemptsDisplay = document.getElementById('attempts');
+        const survivedDisplay = document.getElementById('survived');
+        
+        let chamber = [];
+        let currentPosition = 0;
+        let bullets = 1;
+        let attempts = 0;
+        let survived = 0;
+        
+        function resetRevolver() {
+            chamber = Array(6).fill('🎯'); // Empty chambers
+            // Place bullets randomly
+            for (let i = 0; i < bullets; i++) {
+                let pos;
+                do {
+                    pos = Math.floor(Math.random() * 6);
+                } while (chamber[pos] === '💥');
+                chamber[pos] = '💥';
             }
-            
-            // Render papan
-            function renderBoard() {
-                board.innerHTML = '';
-                
-                for (let row = 0; row < 8; row++) {
-                    for (let col = 0; col < 8; col++) {
-                        const square = document.createElement('div');
-                        square.className = `square ${(row + col) % 2 === 0 ? 'white' : 'black'}`;
-                        square.dataset.row = row;
-                        square.dataset.col = col;
-                        
-                        if (gameState[row][col]) {
-                            square.textContent = gameState[row][col].emoji;
-                        }
-                        
-                        square.addEventListener('click', () => handleSquareClick(row, col));
-                        board.appendChild(square);
-                    }
-                }
-                
-                // Update indikator giliran
-                turnIndicator.className = `turn-indicator ${currentPlayer}-turn`;
-                turnIndicator.textContent = `Giliran: Pemain ${currentPlayer === 'white' ? 'Putih (🟢)' : 'Hitam (🔴)'}`;
-            }
-            
-            // Handle klik kotak
-            function handleSquareClick(row, col) {
-                // Jika belum ada yang dipilih dan ada bidak di kotak ini
-                if (!selectedPiece && gameState[row][col] && gameState[row][col].player === currentPlayer) {
-                    selectedPiece = { row, col };
-                    highlightPossibleMoves(row, col);
-                    return;
-                }
-                
-                // Jika sudah ada yang dipilih dan mengklik bidak sendiri lagi
-                if (selectedPiece && gameState[row][col] && gameState[row][col].player === currentPlayer) {
-                    clearHighlights();
-                    selectedPiece = { row, col };
-                    highlightPossibleMoves(row, col);
-                    return;
-                }
-                
-                // Jika sudah ada yang dipilih dan mencoba bergerak
-                if (selectedPiece) {
-                    const fromRow = selectedPiece.row;
-                    const fromCol = selectedPiece.col;
-                    const piece = gameState[fromRow][fromCol];
-                    
-                    // Validasi gerakan (sederhana)
-                    if (isValidMove(piece, fromRow, fromCol, row, col)) {
-                        // Lakukan gerakan
-                        gameState[row][col] = piece;
-                        gameState[fromRow][fromCol] = null;
-                        
-                        // Ganti giliran
-                        currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
-                        status.textContent = '';
-                    } else {
-                        status.textContent = 'Gerakan tidak valid!';
-                    }
-                    
-                    clearHighlights();
-                    selectedPiece = null;
-                    renderBoard();
+            currentPosition = Math.floor(Math.random() * 6);
+            updateRevolverDisplay();
+        }
+        
+        function updateRevolverDisplay() {
+            let display = [];
+            for (let i = 0; i < 6; i++) {
+                if (i === currentPosition) {
+                    display.push('👉' + chamber[i]);
+                } else {
+                    display.push(chamber[i]);
                 }
             }
+            revolver.textContent = display.join('');
+        }
+        
+        function spin() {
+            currentPosition = Math.floor(Math.random() * 6);
+            updateRevolverDisplay();
+            result.textContent = '';
+        }
+        
+        function pullTrigger() {
+            attempts++;
+            attemptsDisplay.textContent = attempts;
             
-            // Highlight gerakan yang mungkin
-            function highlightPossibleMoves(row, col) {
-                const piece = gameState[row][col];
-                if (!piece) return;
-                
-                const squares = document.querySelectorAll('.square');
-                squares.forEach(sq => {
-                    const sqRow = parseInt(sq.dataset.row);
-                    const sqCol = parseInt(sq.dataset.col);
-                    
-                    if (isValidMove(piece, row, col, sqRow, sqCol)) {
-                        sq.classList.add('possible-move');
-                    }
-                });
-                
-                // Highlight bidak yang dipilih
-                const selectedSquare = document.querySelector(`.square[data-row="${row}"][data-col="${col}"]`);
-                selectedSquare.classList.add('selected');
+            if (chamber[currentPosition] === '💥') {
+                result.textContent = '💀 BANG! You died! 💀';
+                revolver.textContent = '💥💥💥💥💥💥';
+                spinBtn.disabled = true;
+                pullBtn.disabled = true;
+                setTimeout(resetGame, 2000);
+            } else {
+                result.textContent = '😅 Click! You survived!';
+                survived++;
+                survivedDisplay.textContent = survived;
+                currentPosition = (currentPosition + 1) % 6;
+                updateRevolverDisplay();
             }
-            
-            // Clear highlights
-            function clearHighlights() {
-                document.querySelectorAll('.square').forEach(sq => {
-                    sq.classList.remove('selected', 'possible-move');
-                });
+        }
+        
+        function resetGame() {
+            resetRevolver();
+            spinBtn.disabled = false;
+            pullBtn.disabled = false;
+            result.textContent = '';
+        }
+        
+        function changeDifficulty() {
+            bullets = parseInt(prompt("Enter number of bullets (1-5):", bullets));
+            if (isNaN(bullets) || bullets < 1 || bullets > 5) {
+                bullets = 1;
             }
-            
-            // Validasi gerakan (sangat sederhana)
-            function isValidMove(piece, fromRow, fromCol, toRow, toCol) {
-                // Jika kotak tujuan sama dengan kotak asal
-                if (fromRow === toRow && fromCol === toCol) return false;
-                
-                // Jika kotak tujuan berisi bidak sendiri
-                if (gameState[toRow][toCol] && gameState[toRow][toCol].player === piece.player) {
-                    return false;
-                }
-                
-                // Aturan gerakan dasar
-                switch (piece.type) {
-                    case 'pawn':
-                        // Pion hanya bisa maju 1 langkah (versi sederhana)
-                        if (piece.player === 'white') {
-                            return fromCol === toCol && toRow === fromRow - 1 && !gameState[toRow][toCol];
-                        } else {
-                            return fromCol === toCol && toRow === fromRow + 1 && !gameState[toRow][toCol];
-                        }
-                        
-                    case 'rook':
-                        // Benteng gerak lurus
-                        return (fromRow === toRow || fromCol === toCol) && isPathClear(fromRow, fromCol, toRow, toCol);
-                        
-                    case 'knight':
-                        // Kuda gerak L
-                        const rowDiff = Math.abs(toRow - fromRow);
-                        const colDiff = Math.abs(toCol - fromCol);
-                        return (rowDiff === 2 && colDiff === 1) || (rowDiff === 1 && colDiff === 2);
-                        
-                    case 'bishop':
-                        // Gajah gerak diagonal
-                        return Math.abs(toRow - fromRow) === Math.abs(toCol - fromCol) && 
-                               isPathClear(fromRow, fromCol, toRow, toCol);
-                        
-                    case 'queen':
-                        // Menteri gabungan benteng + gajah
-                        return ((fromRow === toRow || fromCol === toCol) || 
-                               (Math.abs(toRow - fromRow) === Math.abs(toCol - fromCol))) && 
-                               isPathClear(fromRow, fromCol, toRow, toCol);
-                        
-                    case 'king':
-                        // Raja gerak 1 langkah ke segala arah
-                        return Math.abs(toRow - fromRow) <= 1 && Math.abs(toCol - fromCol) <= 1;
-                }
-                
-                return false;
-            }
-            
-            // Cek apakah jalur bebas (untuk benteng, gajah, menteri)
-            function isPathClear(fromRow, fromCol, toRow, toCol) {
-                const rowStep = fromRow === toRow ? 0 : (fromRow < toRow ? 1 : -1);
-                const colStep = fromCol === toCol ? 0 : (fromCol < toCol ? 1 : -1);
-                
-                let row = fromRow + rowStep;
-                let col = fromCol + colStep;
-                
-                while (row !== toRow || col !== toCol) {
-                    if (gameState[row][col]) return false;
-                    row += rowStep;
-                    col += colStep;
-                }
-                
-                return true;
-            }
-            
-            // Render papan pertama kali
-            renderBoard();
-        });
+            bulletsDisplay.textContent = bullets;
+            resetGame();
+        }
+        
+        spinBtn.addEventListener('click', spin);
+        pullBtn.addEventListener('click', pullTrigger);
+        bulletsDisplay.addEventListener('click', changeDifficulty);
+        
+        // Initialize game
+        resetGame();
     </script>
 </body>
 </html>
