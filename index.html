@@ -8,7 +8,7 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.5;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 15px;
             background-color: #f5f7fa;
@@ -17,26 +17,36 @@
         }
         .container {
             display: flex;
-            gap: 20px;
+            gap: 25px;
+            align-items: flex-start;
         }
         .image-column {
-            flex: 40%;
-        }
-        .text-column {
-            flex: 60%;
-        }
-        .brain-image {
+            flex: 0 0 350px;
             position: sticky;
             top: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .brain-image {
             background-color: white;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
         .brain-image img {
             width: 100%;
+            height: auto;
+            object-fit: contain;
+            flex-grow: 1;
             border-radius: 5px;
             border: 1px solid #ddd;
+        }
+        .text-column {
+            flex: 1;
         }
         .structure-card {
             background-color: white;
@@ -75,9 +85,21 @@
             padding-left: 10px;
             border-left: 2px solid #ea4335;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .container {
                 flex-direction: column;
+            }
+            .image-column {
+                position: static;
+                height: auto;
+                width: 100%;
+                flex: 1;
+            }
+            .brain-image {
+                height: auto;
+            }
+            .brain-image img {
+                max-height: 400px;
             }
         }
     </style>
@@ -89,11 +111,12 @@
         <div class="image-column">
             <div class="brain-image">
                 <img src="Brains.jpeg" alt="Struktur Otak">
-                <p style="text-align: center; font-size: 12px; color: #666;"><em>Gambar Anatomi Otak Manusia</em></p>
+                <p style="text-align: center; font-size: 12px; color: #666; margin-top: 10px;"><em>Gambar Anatomi Otak Manusia</em></p>
             </div>
         </div>
         
         <div class="text-column">
+            <!-- Konten struktur otak sama seperti sebelumnya -->
             <div class="structure-card">
                 <h3>1. CEREBRUM <span class="scientific">(Telencephalon)</span></h3>
                 <ul class="function-list">
