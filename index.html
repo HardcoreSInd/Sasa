@@ -1,117 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struktur dan Fungsi Otak Manusia</title>
+    <title>Anatomi Otak Manusia</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             color: #333;
+            background-color: #f9f9f9;
         }
         h1 {
             color: #2c3e50;
             text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .brain-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
             margin-bottom: 30px;
         }
         .brain-image {
+            flex: 1;
+            min-width: 300px;
             text-align: center;
-            margin: 20px 0;
         }
         .brain-image img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+        .brain-structures {
+            flex: 1;
+            min-width: 300px;
         }
         .structure {
-            background-color: #f8f9fa;
+            background-color: white;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             border-left: 4px solid #3498db;
-            border-radius: 0 4px 4px 0;
         }
         .structure h3 {
             color: #2980b9;
             margin-top: 0;
         }
+        .structure ul {
+            padding-left: 20px;
+        }
+        .structure li {
+            margin-bottom: 8px;
+        }
         .footer {
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: #7f8c8d;
             text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
     <h1>Struktur dan Fungsi Otak Manusia</h1>
     
-    <div class="brain-image">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Human_brain_right_lateral_view_description_2.JPG" alt="Diagram Otak Manusia">
-        <p><em>Gambar 1: Struktur utama otak manusia</em></p>
+    <div class="brain-container">
+        <div class="brain-image">
+            <!-- Ganti URL ini dengan raw URL gambar Anda dari GitHub -->
+            <img src="https://raw.githubusercontent.com/username/repo/branch/Brains.jpeg" 
+                 alt="Diagram Anatomi Otak Manusia">
+            <p><em>Gambar 1: Bagian-bagian utama otak manusia</em></p>
+        </div>
+        
+        <div class="brain-structures">
+            <div class="structure">
+                <h3>1. Cerebrum (Otak Besar)</h3>
+                <ul>
+                    <li><strong>Lobus Frontal</strong>: Pemikiran logis, pengambilan keputusan, kontrol motorik</li>
+                    <li><strong>Lobus Parietal</strong>: Pemrosesan sensorik (sentuhan, suhu, nyeri)</li>
+                    <li><strong>Lobus Temporal</strong>: Pendengaran, memori, dan emosi</li>
+                    <li><strong>Lobus Oksipital</strong>: Penglihatan</li>
+                </ul>
+            </div>
+            
+            <div class="structure">
+                <h3>2. Cerebellum (Otak Kecil)</h3>
+                <ul>
+                    <li>Koordinasi gerakan halus</li>
+                    <li>Keseimbangan tubuh</li>
+                    <li>Postur dan stabilitas</li>
+                    <li>Pembelajaran motorik (misal: belajar naik sepeda)</li>
+                </ul>
+            </div>
+            
+            <div class="structure">
+                <h3>3. Batang Otak</h3>
+                <ul>
+                    <li><strong>Medulla Oblongata</strong>: Detak jantung, pernapasan, tekanan darah</li>
+                    <li><strong>Pons</strong>: Menghubungkan berbagai bagian otak</li>
+                    <li><strong>Midbrain</strong>: Gerakan mata, pemrosesan visual/auditori</li>
+                </ul>
+            </div>
+        </div>
     </div>
     
     <div class="structure">
-        <h3>1. Cerebrum (Otak Besar)</h3>
-        <p>Cerebrum adalah bagian terbesar dari otak yang terdiri dari dua belahan (hemisfer). Fungsi utamanya meliputi:</p>
+        <h3>4. Sistem Limbik (Otak Emosional)</h3>
         <ul>
-            <li>Pemikiran, penalaran, dan pemecahan masalah</li>
-            <li>Pengolahan informasi sensorik</li>
-            <li>Pengendalian gerakan volunter</li>
-            <li>Bahasa dan komunikasi</li>
-            <li>Memori dan pembelajaran</li>
+            <li><strong>Hipokampus</strong>: Pembentukan memori baru</li>
+            <li><strong>Amigdala</strong>: Respons emosional (terutama ketakutan)</li>
+            <li><strong>Hipotalamus</strong>: Mengatur hormon, suhu tubuh, lapar/haus</li>
+            <li><strong>Thalamus</strong>: Stasiun relay informasi sensorik</li>
         </ul>
     </div>
     
     <div class="structure">
-        <h3>2. Cerebellum (Otak Kecil)</h3>
-        <p>Cerebellum terletak di bawah cerebrum dan berfungsi untuk:</p>
+        <h3>5. Korteks Serebral</h3>
+        <p>Permukaan berlipat-lipat dari cerebrum yang terdiri dari:</p>
         <ul>
-            <li>Koordinasi gerakan tubuh</li>
-            <li>Menjaga keseimbangan dan postur</li>
-            <li>Pembelajaran motorik</li>
-            <li>Beberapa fungsi kognitif seperti bahasa dan perhatian</li>
-        </ul>
-    </div>
-    
-    <div class="structure">
-        <h3>3. Brainstem (Batang Otak)</h3>
-        <p>Brainstem menghubungkan otak dengan sumsum tulang belakang dan mengontrol fungsi vital seperti:</p>
-        <ul>
-            <li>Pernapasan</li>
-            <li>Denyut jantung</li>
-            <li>Tekanan darah</li>
-            <li>Kesadaran dan siklus tidur-bangun</li>
-        </ul>
-    </div>
-    
-    <div class="structure">
-        <h3>4. Diencephalon</h3>
-        <p>Terletak di antara cerebrum dan brainstem, terdiri dari:</p>
-        <ul>
-            <li><strong>Thalamus</strong>: Stasiun relay untuk informasi sensorik</li>
-            <li><strong>Hypothalamus</strong>: Mengatur suhu tubuh, lapar, haus, emosi, dan sistem endokrin</li>
-            <li><strong>Epithalamus</strong>: Mengandung kelenjar pineal yang mengatur ritme sirkadian</li>
-        </ul>
-    </div>
-    
-    <div class="structure">
-        <h3>5. Lobus Otak</h3>
-        <p>Cerebrum dibagi menjadi empat lobus utama:</p>
-        <ul>
-            <li><strong>Frontal</strong>: Pemikiran tingkat tinggi, pengambilan keputusan, kontrol motorik</li>
-            <li><strong>Parietal</strong>: Pemrosesan sensorik dan integrasi</li>
-            <li><strong>Temporal</strong>: Pendengaran, memori, dan emosi</li>
-            <li><strong>Occipital</strong>: Pengolahan visual</li>
+            <li><strong>Materi Abu-abu</strong>: Badan sel neuron (pemrosesan informasi)</li>
+            <li><strong>Materi Putih</strong>: Akson neuron (penghubung antar area otak)</li>
         </ul>
     </div>
     
     <div class="footer">
-        <p>Sumber gambar: Google Images | Informasi medis dari berbagai sumber terpercaya</p>
+        <p>Sumber gambar: GitHub Repository Anda | Konten edukasi anatomi</p>
         <p>© 2023 Pendidikan Biologi</p>
     </div>
 </body>
