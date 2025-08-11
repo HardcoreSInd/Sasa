@@ -8,52 +8,40 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.5;
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 15px;
             background-color: #f5f7fa;
             color: #333;
-            font-size: 14px;
-        }
-        .container {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-        }
-        .image-column {
-            flex: 0 0 400px; /* Lebarkan kolom gambar */
-            position: sticky;
-            top: 20px;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-size: 13px; /* Ukuran font lebih kecil */
         }
         .brain-image {
+            text-align: center;
+            margin-bottom: 20px;
             background-color: white;
-            padding: 15px;
+            padding: 10px;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
         }
         .brain-image img {
-            width: 100%;
+            max-width: 100%;
             height: auto;
-            object-fit: contain;
-            flex-grow: 1;
             border-radius: 5px;
             border: 1px solid #ddd;
-            transform: scale(1.1); /* Perbesar gambar 10% */
-            transform-origin: left center; /* Perbesar dari kiri */
         }
-        .text-column {
+        .structures-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .structure-column {
             flex: 1;
+            min-width: 250px;
         }
         .structure-card {
             background-color: white;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 12px;
+            margin-bottom: 12px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             border-left: 3px solid #4285f4;
@@ -61,45 +49,39 @@
         h1 {
             color: #202124;
             text-align: center;
-            font-size: 22px;
-            margin-bottom: 20px;
+            font-size: 20px;
+            margin-bottom: 15px;
         }
         h3 {
             color: #4285f4;
             margin-top: 0;
-            font-size: 16px;
+            font-size: 14px;
             border-bottom: 1px dashed #e0e0e0;
-            padding-bottom: 5px;
+            padding-bottom: 4px;
         }
         .scientific {
             font-style: italic;
             color: #34a853;
             font-weight: bold;
+            font-size: 12px;
         }
         .function-list {
-            padding-left: 18px;
+            padding-left: 15px;
+            margin: 8px 0;
         }
         .function-list li {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+            font-size: 12px;
         }
         .sub-structure {
-            margin-left: 15px;
-            padding-left: 10px;
+            margin-left: 12px;
+            padding-left: 8px;
             border-left: 2px solid #ea4335;
+            font-size: 11.5px;
         }
-        @media (max-width: 900px) {
-            .container {
-                flex-direction: column;
-            }
-            .image-column {
-                position: static;
-                height: auto;
-                width: 100%;
-                flex: 1;
-            }
-            .brain-image img {
-                transform: none;
-                max-height: 400px;
+        @media (max-width: 600px) {
+            .structure-column {
+                min-width: 100%;
             }
         }
     </style>
@@ -107,45 +89,84 @@
 <body>
     <h1>STRUKTUR DAN FUNGSI OTAK MANUSIA</h1>
     
-    <div class="container">
-        <div class="image-column">
-            <div class="brain-image">
-                <img src="Brains.jpeg" alt="Struktur Otak">
-                <p style="text-align: center; font-size: 12px; color: #666; margin-top: 10px;"><em>Gambar Anatomi Otak Manusia</em></p>
-            </div>
-        </div>
-        
-        <div class="text-column">
-            <!-- Konten struktur otak tetap sama -->
+    <div class="brain-image">
+        <img src="Brains.jpeg" alt="Struktur Otak">
+        <p style="text-align: center; font-size: 11px; color: #666;"><em>Gambar Anatomi Otak Manusia</em></p>
+    </div>
+    
+    <div class="structures-container">
+        <div class="structure-column">
             <div class="structure-card">
                 <h3>1. CEREBRUM <span class="scientific">(Telencephalon)</span></h3>
                 <ul class="function-list">
                     <li><strong>Lobus Frontal</strong>: 
                         <div class="sub-structure">
-                            - Pusat pemikiran logis dan pengambilan keputusan<br>
-                            - Mengontrol gerakan volunter<br>
+                            - Pemikiran logis & pengambilan keputusan<br>
+                            - Kontrol gerakan volunter<br>
                             - Area Broca (produksi bahasa)
                         </div>
                     </li>
                     <li><strong>Lobus Parietal</strong>:
                         <div class="sub-structure">
-                            - Pemrosesan sensori (sentuhan, suhu, nyeri)<br>
+                            - Pemrosesan sensori (sentuhan, suhu)<br>
                             - Integrasi sensorimotor<br>
                             - Pemahaman spasial
-                        </div>
-                    </li>
-                    <li><strong>Lobus Temporal</strong>:
-                        <div class="sub-structure">
-                            - Pendengaran dan interpretasi suara<br>
-                            - Memori jangka panjang (Hippocampus)<br>
-                            - Area Wernicke (pemahaman bahasa)
                         </div>
                     </li>
                 </ul>
             </div>
 
-            <!-- (Bagian struktur lainnya tetap sama seperti sebelumnya) -->
-            
+            <div class="structure-card">
+                <h3>2. BATANG OTAK <span class="scientific">(Truncus encephali)</span></h3>
+                <ul class="function-list">
+                    <li><strong>Mesencephalon</strong>:
+                        <div class="sub-structure">
+                            - <span class="scientific">Colliculi superior</span>: Refleks visual<br>
+                            - <span class="scientific">Substantia nigra</span>: Produksi dopamin
+                        </div>
+                    </li>
+                    <li><strong>Pons</strong>:
+                        <div class="sub-structure">
+                            - Penghubung otak besar-kecil<br>
+                            - Pola pernapasan
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="structure-column">
+            <div class="structure-card">
+                <h3>3. CEREBELLUM <span class="scientific">(Metencephalon)</span></h3>
+                <ul class="function-list">
+                    <li>Koordinasi gerakan halus</li>
+                    <li>Keseimbangan & postur</li>
+                    <li>Struktur:
+                        <div class="sub-structure">
+                            - <span class="scientific">Vermis</span>: Koordinasi tubuh<br>
+                            - <span class="scientific">Arbor vitae</span>: Pola putih
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="structure-card">
+                <h3>4. DIENCEPHALON</h3>
+                <ul class="function-list">
+                    <li><strong>Thalamus</strong>:
+                        <div class="sub-structure">
+                            - Relay informasi sensorik<br>
+                            - Regulasi kesadaran
+                        </div>
+                    </li>
+                    <li><strong>Hypothalamus</strong>:
+                        <div class="sub-structure">
+                            - Homeostasis (suhu, lapar)<br>
+                            - Kontrol sistem endokrin
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </body>
