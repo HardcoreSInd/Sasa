@@ -3,165 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struktur Otak Manusia</title>
+    <title>Struktur Otak - Tugas Sekolah</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            max-width: 900px;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.5;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #f8f9fa;
+            padding: 15px;
+            background-color: #f5f7fa;
             color: #333;
+            font-size: 14px;
         }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #3498db;
-            margin-bottom: 30px;
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .image-column {
+            flex: 40%;
+        }
+        .text-column {
+            flex: 60%;
         }
         .brain-image {
-            text-align: center;
-            margin: 30px 0;
+            position: sticky;
+            top: 20px;
             background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         .brain-image img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
         }
-        .structure {
+        .structure-card {
             background-color: white;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 15px;
+            margin-bottom: 15px;
             border-radius: 8px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-            border-left: 5px solid #3498db;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 3px solid #4285f4;
         }
-        .structure h3 {
-            color: #2980b9;
+        h1 {
+            color: #202124;
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            color: #4285f4;
             margin-top: 0;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 8px;
+            font-size: 16px;
+            border-bottom: 1px dashed #e0e0e0;
+            padding-bottom: 5px;
         }
-        .scientific-name {
+        .scientific {
             font-style: italic;
-            color: #e74c3c;
+            color: #34a853;
             font-weight: bold;
         }
-        .latin {
-            color: #7f8c8d;
-            font-size: 0.9em;
+        .function-list {
+            padding-left: 18px;
+        }
+        .function-list li {
+            margin-bottom: 8px;
+        }
+        .sub-structure {
+            margin-left: 15px;
+            padding-left: 10px;
+            border-left: 2px solid #ea4335;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Anatomi Otak Manusia</h1>
+    <h1>STRUKTUR DAN FUNGSI OTAK MANUSIA</h1>
+    
+    <div class="container">
+        <div class="image-column">
+            <div class="brain-image">
+                <img src="Brains.jpeg" alt="Struktur Otak">
+                <p style="text-align: center; font-size: 12px; color: #666;"><em>Gambar Anatomi Otak Manusia</em></p>
+            </div>
+        </div>
+        
+        <div class="text-column">
+            <div class="structure-card">
+                <h3>1. CEREBRUM <span class="scientific">(Telencephalon)</span></h3>
+                <ul class="function-list">
+                    <li><strong>Lobus Frontal</strong>: 
+                        <div class="sub-structure">
+                            - Pusat pemikiran logis dan pengambilan keputusan<br>
+                            - Mengontrol gerakan volunter<br>
+                            - Area Broca (produksi bahasa)
+                        </div>
+                    </li>
+                    <li><strong>Lobus Parietal</strong>:
+                        <div class="sub-structure">
+                            - Pemrosesan sensori (sentuhan, suhu, nyeri)<br>
+                            - Integrasi sensorimotor<br>
+                            - Pemahaman spasial
+                        </div>
+                    </li>
+                    <li><strong>Lobus Temporal</strong>:
+                        <div class="sub-structure">
+                            - Pendengaran dan interpretasi suara<br>
+                            - Memori jangka panjang (Hippocampus)<br>
+                            - Area Wernicke (pemahaman bahasa)
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-    <div class="brain-image">
-        <img src="Brains.jpeg" alt="Struktur Otak Manusia">
-        <p><em>Gambar 1: Bagian-bagian utama otak manusia</em></p>
-    </div>
+            <div class="structure-card">
+                <h3>2. BATANG OTAK <span class="scientific">(Truncus encephali)</span></h3>
+                <ul class="function-list">
+                    <li><strong>Mesencephalon</strong> (Otak Tengah):
+                        <div class="sub-structure">
+                            - <span class="scientific">Colliculi superior</span>: Refleks visual<br>
+                            - <span class="scientific">Colliculi inferior</span>: Refleks auditori<br>
+                            - <span class="scientific">Substantia nigra</span>: Produksi dopamin
+                        </div>
+                    </li>
+                    <li><strong>Pons</strong> (Jembatan Varol):
+                        <div class="sub-structure">
+                            - Penghubung antara otak besar dan kecil<br>
+                            - Mengatur pola pernapasan<br>
+                            - Mengandung inti saraf kranial V-VIII
+                        </div>
+                    </li>
+                    <li><strong>Medulla Oblongata</strong> (Sumsum Lanjutan):
+                        <div class="sub-structure">
+                            - Pusat kendali pernapasan dan detak jantung<br>
+                            - Refleks muntah, batuk, bersin<br>
+                            - Dekussasi piramida (persilangan saraf motorik)
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-    <div class="structure">
-        <h3>1. Cerebrum <span class="latin">(Otak Besar)</span></h3>
-        <p><span class="scientific-name">Telencephalon</span> - Bagian terbesar otak yang terdiri dari 4 lobus:</p>
-        <ul>
-            <li><strong>Lobus Frontal</strong> <span class="latin">(Frontal lobe)</span>: Pemikiran logis, pengambilan keputusan, kontrol motorik</li>
-            <li><strong>Lobus Parietal</strong> <span class="latin">(Parietal lobe)</span>: Pemrosesan sensorik (sentuhan, suhu, nyeri)</li>
-            <li><strong>Lobus Temporal</strong> <span class="latin">(Temporal lobe)</span>: Pendengaran, memori, dan emosi</li>
-            <li><strong>Lobus Oksipital</strong> <span class="latin">(Occipital lobe)</span>: Penglihatan dan interpretasi visual</li>
-        </ul>
-    </div>
+            <div class="structure-card">
+                <h3>3. CEREBELLUM <span class="scientific">(Metencephalon)</span></h3>
+                <ul class="function-list">
+                    <li>Koordinasi gerakan halus dan presisi</li>
+                    <li>Mempertahankan postur dan keseimbangan</li>
+                    <li>Pembelajaran motorik</li>
+                    <li>Struktur:
+                        <div class="sub-structure">
+                            - <span class="scientific">Vermis</span>: Koordinasi tubuh tengah<br>
+                            - <span class="scientific">Hemispheria cerebelli</span>: Koordinasi anggota gerak<br>
+                            - <span class="scientific">Arbor vitae</span>: Pola putih berbentuk pohon
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-    <div class="structure">
-        <h3>2. Cerebellum <span class="latin">(Otak Kecil)</span></h3>
-        <p><span class="scientific-name">Metencephalon</span> - Terletak di bawah cerebrum:</p>
-        <ul>
-            <li>Koordinasi gerakan halus dan presisi</li>
-            <li>Mempertahankan keseimbangan dan postur</li>
-            <li>Pembelajaran motorik (misal: belajar mengetik)</li>
-            <li>Memiliki struktur <span class="scientific-name">Vermis</span> di tengah dan <span class="scientific-name">Hemispherium cerebelli</span> di samping</li>
-        </ul>
-    </div>
+            <div class="structure-card">
+                <h3>4. DIENCEPHALON</h3>
+                <ul class="function-list">
+                    <li><strong>Thalamus</strong>:
+                        <div class="sub-structure">
+                            - Stasiun relay informasi sensorik<br>
+                            - Mengatur kesadaran dan gairah
+                        </div>
+                    </li>
+                    <li><strong>Hypothalamus</strong>:
+                        <div class="sub-structure">
+                            - Pusat homeostasis (suhu, lapar, haus)<br>
+                            - Mengontrol sistem endokrin<br>
+                            - Mengatur siklus sirkadian
+                        </div>
+                    </li>
+                    <li><strong>Epithalamus</strong>:
+                        <div class="sub-structure">
+                            - Mengandung <span class="scientific">kelenjar pineal</span><br>
+                            - Produksi melatonin untuk regulasi tidur
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-    <div class="structure">
-        <h3>3. Batang Otak <span class="latin">(Brainstem)</span></h3>
-        <p><span class="scientific-name">Truncus encephali</span> - Terdiri dari 3 bagian utama:</p>
-        <ul>
-            <li><strong>Mesencephalon</strong> <span class="latin">(Otak Tengah)</span>:
-                <ul>
-                    <li><span class="scientific-name">Tectum</span>: Mengatur refleks visual dan auditori</li>
-                    <li><span class="scientific-name">Tegmentum</span>: Mengandung substansia nigra yang penting untuk gerakan</li>
+            <div class="structure-card">
+                <h3>5. SISTEM LIMBIK</h3>
+                <ul class="function-list">
+                    <li><strong>Hippocampus</strong>:
+                        <div class="sub-structure">
+                            - Konsolidasi memori jangka panjang<br>
+                            - Navigasi spasial
+                        </div>
+                    </li>
+                    <li><strong>Amigdala</strong>:
+                        <div class="sub-structure">
+                            - Pemrosesan emosi (terutama ketakutan)<br>
+                            - Pembentukan memori emosional
+                        </div>
+                    </li>
+                    <li><strong>Fornix</strong>:
+                        <div class="sub-structure">
+                            - Jalur penghubung utama sistem limbik
+                        </div>
+                    </li>
                 </ul>
-            </li>
-            <li><strong>Pons</strong> <span class="latin">(Jembatan Varol)</span>:
-                <ul>
-                    <li>Penghubung antara cerebrum dan cerebellum</li>
-                    <li>Mengatur pola pernapasan</li>
-                </ul>
-            </li>
-            <li><strong>Medulla Oblongata</strong> <span class="latin">(Sumsum Lanjutan)</span>:
-                <ul>
-                    <li>Mengontrol fungsi otonom: detak jantung, pernapasan, tekanan darah</li>
-                    <li>Terdapat <span class="scientific-name">piramida medulla</span> yang menjadi jalur saraf motorik</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-
-    <div class="structure">
-        <h3>4. Diencephalon</h3>
-        <p>Struktur di antara cerebrum dan batang otak:</p>
-        <ul>
-            <li><strong>Thalamus</strong>:
-                <ul>
-                    <li>Stasiun relay semua informasi sensorik (kecuali penciuman)</li>
-                    <li>Mengatur kesadaran dan siklus tidur-bangun</li>
-                </ul>
-            </li>
-            <li><strong>Hypothalamus</strong>:
-                <ul>
-                    <li>Mengatur homeostasis (suhu tubuh, lapar, haus)</li>
-                    <li>Mengontrol sistem endokrin melalui kelenjar pituitari</li>
-                    <li>Pusat emosi dan perilaku</li>
-                </ul>
-            </li>
-            <li><strong>Epithalamus</strong>:
-                <ul>
-                    <li>Mengandung <span class="scientific-name">kelenjar pineal</span> yang menghasilkan melatonin</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-
-    <div class="structure">
-        <h3>5. Sistem Limbik</h3>
-        <p><span class="scientific-name">Paleomammalian cortex</span> - Otak emosional:</p>
-        <ul>
-            <li><strong>Hippocampus</strong>:
-                <ul>
-                    <li>Pembentukan memori jangka panjang</li>
-                    <li>Navigasi spasial</li>
-                </ul>
-            </li>
-            <li><strong>Amigdala</strong>:
-                <ul>
-                    <li>Pemrosesan emosi (terutama ketakutan dan agresi)</li>
-                    <li>Pembentukan memori emosional</li>
-                </ul>
-            </li>
-            <li><strong>Fornix</strong>:
-                <ul>
-                    <li>Jalur penghubung utama sistem limbik</li>
-                </ul>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>
