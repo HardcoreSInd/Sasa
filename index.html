@@ -201,13 +201,67 @@
             padding: 2px 5px;
             border-radius: 3px;
         }
-        
+         .quiz-container {
+            background: linear-gradient(to bottom right, #bbdefb, #90caf9);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .quiz-title {
+            text-align: center;
+            color: #0d47a1;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #1a237e;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+        .option {
+            padding: 15px;
+            background-color: #e3f2fd;
+            border: 2px solid #bbdefb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background-color: #bbdefb;
+            transform: translateY(-2px);
+        }
+        .option.selected {
+            background-color: #64b5f6;
+            border-color: #1976d2;
+            color: white;
+        }
+        .option.correct {
+            background-color: #81c784;
+            border-color: #388e3c;
+            color: white;
+        }
+        .option.incorrect {
+            background-color: #e57373;
+            border-color: #d32f2f;
+            color: white;
+        }
         .quiz-controls {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
         }
-        
         button {
             padding: 12px 25px;
             background-color: #1b5e20;
@@ -218,29 +272,31 @@
             font-size: 1rem;
             transition: all 0.3s ease;
         }
-        
         button:hover {
             background-color: #2e7d32;
             transform: translateY(-2px);
         }
-        
         button:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
         }
-        
         .result {
             text-align: center;
             margin-top: 20px;
             font-size: 1.2rem;
             font-weight: 600;
         }
-        
         .score {
             font-size: 1.5rem;
             color: #1b5e20;
             margin-top: 10px;
         }
+        .info {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+        }
+   
     </style>
 </head>
 <body>
@@ -260,6 +316,7 @@
         <a href="#kalimat-arab">Kalimat Arab</a>
         <a href="#Haji">Tiga jenis haji</a>
         <a href="#Sahabat">Sahabat-sahabat Nabi Muhammad SAW</a>
+        <a href="#quiz">Latihan</a>
     </div>
 
     <section id="al-ghazali">
@@ -807,11 +864,456 @@ Qiran Haji & Umrah Digabung, satu paket 1x Ihram Wajib (sembelih kambing)
   · Abdurrahman bin Auf: Saudagar yang sangat kaya dan dermawan.<br>
   · Bilal bin Rabah: Muadzin pertama dalam Islam, mantan budak.</strong></p>
     </div>
-    
-</section>
+    </section>
+
+<section id="quiz">
+        <h2>Latihan</h2>
+        <div class="quiz-container">
+            <h3 class="quiz-title">Uji Pengetahuan Anda!</h3>
+            <div class="question" id="question">Pertanyaan akan muncul di sini</div>
+            <div class="options" id="options">
+                <div class="option" onclick="selectOption(0)">Pilihan 1</div>
+                <div class="option" onclick="selectOption(1)">Pilihan 2</div>
+                <div class="option" onclick="selectOption(2)">Pilihan 3</div>
+                <div class="option" onclick="selectOption(3)">Pilihan 4</div>
+            </div>
+            <div class="quiz-controls">
+                <button id="prev-btn" onclick="prevQuestion()" disabled>Sebelumnya</button>
+                <button id="next-btn" onclick="nextQuestion()">Selanjutnya</button>
+                <button id="submit-btn" onclick="submitQuiz()" style="display: none;">Selesai</button>
+            </div>
+            <div class="result" id="result"></div>
+        </div>
+    </section>
 
     <footer>
         <p><strong>jika teks ada yang berantakan, maaf</strong> </p><p><span class="highlight">"Barakallahu fiikum"</span></p>
     </footer>
+    <script>
+        // Bank pertanyaan lengkap (30 pertanyaan)
+        const allQuestions = [
+            {
+                question: "Siapakah nama lengkap Imam Al-Ghazali?",
+                options: [
+                    "Abu Hamid Muhammad bin Muhammad al-Ghazali",
+                    "Abdullah bin Nuh al-Ghazali",
+                    "Ahmad bin Hanbal al-Ghazali",
+                    "Ali bin Abi Thalib al-Ghazali"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Kapan Mama Abdullah bin Nuh wafat?",
+                options: [
+                    "1985 M",
+                    "1987 M",
+                    "1990 M",
+                    "1992 M"
+                ],
+                correctIndex: 1
+            },
+            {
+                question: "Apa karya utama Imam Al-Ghazali?",
+                options: [
+                    "Shahih Bukhari",
+                    "Ihya Ulumuddin",
+                    "Tafsir Jalalain",
+                    "Arbain Nawawi"
+                ],
+                correctIndex: 1
+            },
+            {
+                question: "Di mana Mama Abdullah bin Nuh dilahirkan?",
+                options: [
+                    "Jakarta",
+                    "Bogor",
+                    "Cianjur",
+                    "Bandung"
+                ],
+                correctIndex: 2
+            },
+            {
+                question: "Bulan apakah dalam kalender Hijriyah yang dikenal sebagai bulan puasa?",
+                options: [
+                    "Syawwal",
+                    "Ramadhan",
+                    "Muharram",
+                    "Rajab"
+                ],
+                correctIndex: 1
+            },
+            {
+                question: "Siapakah istri pertama Nabi Muhammad SAW?",
+                options: [
+                    "Aisyah",
+                    "Khadijah",
+                    "Hafsah",
+                    "Zainab"
+                ],
+                correctIndex: 1
+            },
+            {
+                question: "Surah apakah yang disebut sebagai 'jantung Al-Qur'an'?",
+                options: [
+                    "Al-Fatihah",
+                    "Al-Baqarah",
+                    "Yasin",
+                    "Al-Ikhlas"
+                ],
+                correctIndex: 2
+            },
+            {
+                question: "Siapakah Wali Songo yang dikenal dengan sebutan Sunan Kalijaga?",
+                options: [
+                    "Raden Rahmat",
+                    "Raden Paku",
+                    "Raden Said",
+                    "Raden Umar Said"
+                ],
+                correctIndex: 2
+            },
+            {
+                question: "Apa nama lain dari Surah Al-Fatihah?",
+                options: [
+                    "Ummul Qur'an",
+                    "Qalbul Qur'an",
+                    "Syifa'ul Qur'an",
+                    "Nurul Qur'an"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Berapa jumlah istri Nabi Muhammad SAW?",
+                options: [
+                    "9 orang",
+                    "11 orang",
+                    "13 orang",
+                    "15 orang"
+                ],
+                correctIndex: 1
+            },
+            {
+                question: "Siapakah penulis kitab Ihya Ulumuddin?",
+                options: [
+                    "Imam Al-Ghazali",
+                    "Imam Syafi'i",
+                    "Imam Bukhari",
+                    "Imam Nawawi"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Apa gelar yang diberikan kepada Imam Al-Ghazali?",
+                options: [
+                    "Hujjatul Islam",
+                    "Imam Ahlus Sunnah",
+                    "Syekhul Islam",
+                    "Quthubuzzaman"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Di mana Imam Al-Ghazali dilahirkan?",
+                options: [
+                    "Thus, Persia",
+                    "Baghdad, Irak",
+                    "Kairo, Mesir",
+                    "Damaskus, Suriah"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Apa nama pesantren yang didirikan oleh Mama Abdullah bin Nuh?",
+                options: [
+                    "Pesantren Al-Ghazali",
+                    "Pesantren At-Taqwa",
+                    "Pesantren Darussalam",
+                    "Pesantren An-Nur"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Siapakah Wali Songo yang dikenal dengan sebutan Sunan Gresik?",
+                options: [
+                    "Maulana Malik Ibrahim",
+                    "Raden Rahmat",
+                    "Raden Paku",
+                    "Raden Said"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Bulan apakah dalam Islam yang dilarang berperang?",
+                options: [
+                    "Muharram",
+                    "Rajab",
+                    "Dzulqa'dah",
+                    "Semua jawaban benar"
+                ],
+                correctIndex: 3
+            },
+            {
+                question: "Surah apakah yang setara dengan sepertiga Al-Qur'an?",
+                options: [
+                    "Al-Fatihah",
+                    "Al-Ikhlas",
+                    "Al-Baqarah",
+                    "Yasin"
+                ],
+                correctIndex: 1
+            },
+            {
+                question: "Apa arti dari kalimat 'Subhanallah'?",
+                options: [
+                    "Mahasuci Allah",
+                    "Segala puji bagi Allah",
+                    "Allah Maha Besar",
+                    "Tidak ada Tuhan selain Allah"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Berapa jumlah bulan dalam kalender Hijriyah?",
+                options: [
+                    "10 bulan",
+                    "12 bulan",
+                    "13 bulan",
+                    "11 bulan"
+                ],
+                correctIndex: 1
+            },
+            {
+                question: "Siapakah istri Nabi Muhammad SAW yang dikenal sebagai ahli hadits?",
+                options: [
+                    "Khadijah",
+                    "Aisyah",
+                    "Hafsah",
+                    "Zainab"
+                ],
+                correctIndex: 1
+            },
+            {
+                question: "Apa nama kitab yang berisi kerancuan filsafat karya Al-Ghazali?",
+                options: [
+                    "Tahafut al-Falasifah",
+                    "Ihya Ulumuddin",
+                    "Al-Munqidz min adh-Dhalal",
+                    "Kimiya as-Sa'adah"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Kapan Imam Al-Ghazali wafat?",
+                options: [
+                    "1111 M",
+                    "1125 M",
+                    "1105 M",
+                    "1098 M"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Apa nama ayah dari Mama Abdullah bin Nuh?",
+                options: [
+                    "Nuh bin Muhammad",
+                    "Muhammad bin Nuh",
+                    "Abdullah bin Nuh",
+                    "Ahmad bin Nuh"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Siapakah Wali Songo yang menyebarkan Islam melalui kesenian wayang?",
+                options: [
+                    "Sunan Kalijaga",
+                    "Sunan Bonang",
+                    "Sunan Giri",
+                    "Sunan Drajat"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Apa arti dari kalimat 'Astaghfirullah'?",
+                options: [
+                    "Aku memohon ampun kepada Allah",
+                    "Dengan nama Allah",
+                    "Segala puji bagi Allah",
+                    "Allah Maha Besar"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Bulan apakah yang disebut sebagai bulan Allah?",
+                options: [
+                    "Muharram",
+                    "Ramadhan",
+                    "Rajab",
+                    "Syawwal"
+                ],
+                correctIndex: 2
+            },
+            {
+                question: "Siapakah istri Nabi Muhammad SAW yang putri dari Abu Bakar?",
+                options: [
+                    "Khadijah",
+                    "Aisyah",
+                    "Hafsah",
+                    "Saudah"
+                ],
+                correctIndex: 1
+            },
+            {
+                question: "Apa nama kitab yang berarti 'Penyelamat dari Kesesatan' karya Al-Ghazali?",
+                options: [
+                    "Al-Munqidz min adh-Dhalal",
+                    "Ihya Ulumuddin",
+                    "Tahafut al-Falasifah",
+                    "Kimiya as-Sa'adah"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Di kota mana Mama Abdullah bin Nuh mendirikan pesantren?",
+                options: [
+                    "Bogor",
+                    "Jakarta",
+                    "Bandung",
+                    "Cianjur"
+                ],
+                correctIndex: 0
+            },
+            {
+                question: "Siapakah Wali Songo yang dikenal dengan sebutan Sunan Ampel?",
+                options: [
+                    "Raden Rahmat",
+                    "Raden Paku",
+                    "Raden Said",
+                    "Maulana Malik Ibrahim"
+                ],
+                correctIndex: 0
+            }
+        ];
+
+        // Pilih 10 pertanyaan secara acak dari bank soal
+        function getRandomQuestions(questions, count) {
+            const shuffled = [...questions].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        const questions = getRandomQuestions(allQuestions, 10);
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let quizSubmitted = false;
+
+        // Fungsi untuk menampilkan pertanyaan
+        function showQuestion() {
+            if (currentQuestion >= questions.length) return;
+            
+            const questionElem = document.getElementById('question');
+            const optionsElem = document.getElementById('options');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            questionElem.textContent = `${currentQuestion + 1}. ${questions[currentQuestion].question}`;
+            
+            // Tampilkan pilihan jawaban
+            for (let i = 0; i < 4; i++) {
+                optionsElem.children[i].textContent = questions[currentQuestion].options[i];
+                
+                // Reset kelas untuk semua opsi
+                optionsElem.children[i].className = 'option';
+                
+                // Tandai opsi yang sudah dipilih sebelumnya
+                if (userAnswers[currentQuestion] === i) {
+                    optionsElem.children[i].classList.add('selected');
+                }
+            }
+            
+            // Atur status tombol
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+            
+            // Sembunyikan hasil jika sedang melihat pertanyaan
+            document.getElementById('result').innerHTML = '';
+        }
+
+        // Fungsi untuk memilih opsi
+        function selectOption(index) {
+            if (quizSubmitted) return;
+            
+            const optionsElem = document.getElementById('options');
+            
+            // Hapus seleksi sebelumnya
+            for (let i = 0; i < 4; i++) {
+                optionsElem.children[i].classList.remove('selected');
+            }
+            
+            // Tandai opsi yang dipilih
+            optionsElem.children[index].classList.add('selected');
+            userAnswers[currentQuestion] = index;
+        }
+
+        // Fungsi untuk pindah ke pertanyaan berikutnya
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            }
+        }
+
+        // Fungsi untuk kembali ke pertanyaan sebelumnya
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        // Fungsi untuk mengirim kuis
+        function submitQuiz() {
+            quizSubmitted = true;
+            
+            // Hitung skor
+            let score = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].correctIndex) {
+                    score++;
+                }
+            }
+            
+            // Tampilkan hasil
+            const resultElem = document.getElementById('result');
+            resultElem.innerHTML = `
+                <h3>Hasil Kuis</h3>
+                <p>Anda menjawab ${score} dari ${questions.length} pertanyaan dengan benar</p>
+                <div class="score">${Math.round((score / questions.length) * 100)}%</div>
+                <button onclick="location.reload()" style="margin-top: 15px;">Coba Lagi</button>
+            `;
+            
+            // Nonaktifkan semua opsi
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.onclick = null;
+            });
+            
+            // Sembunyikan tombol navigasi
+            document.getElementById('prev-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+
+        // Jalankan kuis saat halaman dimuat
+        window.onload = function() {
+            showQuestion();
+        };
+    </script>
 </body>
 </html>
