@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery Software</title>
+  <style>
+    :root {
+      --bg:#0f172a; --muted:#9aa4b2; --accent:#38bdf8;
+      --radius:12px;
+      font-family: Inter, Arial, sans-serif;
+    }
+    body {
+      margin:0; background:var(--bg); color:#e6eef6;
+      min-height:100vh; display:flex; justify-content:center;
+      padding:30px;
+    }
+    .wrap { max-width:1000px; width:100%; }
+    header { margin-bottom:20px; }
+    header h1 { margin:0 0 6px 0; }
+    .grid {
+      display:grid; gap:18px;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    }
+    .card {
+      background:#1e293b; border-radius:var(--radius);
+      overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.5);
+      transition:transform .2s ease;
+    }
+    .card:hover { transform:translateY(-6px); }
+    .thumb { width:100%; height:180px; object-fit:cover; cursor:pointer; }
+    figcaption { padding:12px; }
+    .title { font-weight:bold; margin:0 0 6px 0; }
+    .desc { font-size:13px; color:var(--muted); }
+    .btn {
+      margin-top:8px; background:transparent; border:1px solid var(--accent);
+      color:var(--accent); border-radius:8px; padding:6px 10px; cursor:pointer;
+      font-size:13px;
+    }
+    .modal {
+      position:fixed; inset:0; background:rgba(0,0,0,0.7);
+      display:none; align-items:center; justify-content:center;
+    }
+    .modal.open { display:flex; }
+    .modal-content {
+      position:relative; background:#000; border-radius:10px; padding:10px;
+      display:flex; flex-direction:column; align-items:center;
+    }
+    .modal img { max-width:90vw; max-height:80vh; }
+    .close {
+      position:absolute; top:10px; right:14px; border:none; background:none;
+      color:white; font-size:24px; cursor:pointer;
+    }
+    .caption { margin-top:8px; color:var(--muted); font-size:14px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Gallery Software</h1>
+      <p>Gambar: <strong>soft1.jpeg</strong>, <strong>soft2.jpeg</strong>, <strong>soft3.jpeg</strong></p>
+    </header>
+
+    <main class="grid">
+      <figure class="card">
+        <img class="thumb" src="soft1.jpeg" alt="Software 1" data-caption="Software 1 — Windows 10">
+        <figcaption>
+          <p class="title">Software 1 — Windows 10</p>
+          <p class="desc">Kelebihan: Mudah digunakan, banyak aplikasi.<br>Kekurangan: Rawan virus, berbayar.</p>
+          <button class="btn" data-src="soft1.jpeg" data-caption="Windows 10 — Sistem operasi populer">Lihat</button>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <img class="thumb" src="soft2.jpeg" alt="Software 2" data-caption="Software 2 — Blender">
+        <figcaption>
+          <p class="title">Software 2 — Blender</p>
+          <p class="desc">Kelebihan: Gratis, open source, lengkap.<br>Kekurangan: Agak kompleks untuk pemula.</p>
+          <button class="btn" data-src="soft2.jpeg" data-caption="Blender — Software 3D open source">Lihat</button>
+        </figcaption>
+      </figure>
+
+      <figure class="card">
+        <img class="thumb" src="soft3.jpeg" alt="Software 3" data-caption="Software 3 — VS Code">
+        <figcaption>
+          <p class="title">Software 3 — Visual Studio Code</p>
+          <p class="desc">Kelebihan: Ringan, banyak ekstensi.<br>Kekurangan: Perlu plugin tambahan untuk fitur penuh.</p>
+          <button class="btn" data-src="soft3.jpeg" data-caption="VS Code — Editor kode ringan dan fleksibel">Lihat</button>
+        </figcaption>
+      </figure>
+    </main>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button class="close" id="closeBtn">✕</button>
+      <img id="modalImg" src="" alt="">
+      <div class="caption" id="modalCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modalImg");
+    const modalCaption = document.getElementById("modalCaption");
+    const closeBtn = document.getElementById("closeBtn");
+
+    function openModal(src, caption) {
+      modalImg.src = src;
+      modalCaption.textContent = caption || "";
+      modal.classList.add("open");
+    }
+    function closeModal() {
+      modal.classList.remove("open");
+      modalImg.src = "";
+      modalCaption.textContent = "";
+    }
+
+    document.querySelectorAll(".thumb").forEach(img => {
+      img.addEventListener("click", () => openModal(img.src, img.dataset.caption));
+    });
+    document.querySelectorAll(".btn").forEach(btn => {
+      btn.addEventListener("click", () => openModal(btn.dataset.src, btn.dataset.caption));
+    });
+    closeBtn.addEventListener("click", closeModal);
+    modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+  </script>
+</body>
+</html>
