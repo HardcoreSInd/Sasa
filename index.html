@@ -3,128 +3,288 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery Software</title>
+  <title>Presentasi Software</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     :root {
-      --bg:#0f172a; --muted:#9aa4b2; --accent:#38bdf8;
-      --radius:12px;
-      font-family: Inter, Arial, sans-serif;
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #38bdf8;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --radius: 16px;
     }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
     body {
-      margin:0; background:var(--bg); color:#e6eef6;
-      min-height:100vh; display:flex; justify-content:center;
-      padding:30px;
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    .wrap { max-width:1000px; width:100%; }
-    header { margin-bottom:20px; }
-    header h1 { margin:0 0 6px 0; }
-    .grid {
-      display:grid; gap:18px;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      color: white;
+      animation: fadeDown 1s ease;
     }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    /* Navigasi Kategori */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      background: #1e293b;
+      padding: 15px;
+      border-bottom: 2px solid #334155;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: white;
+      text-shadow: 0 0 8px var(--accent);
+    }
+    .navbar {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+      padding: 10px 0;
+      background: transparent;
+    }
+
+    .nav-button {
+      padding: 10px 25px;
+      background-color: #ff7e5f;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .nav-button:hover {
+      background-color: #feb47b;
+      transform: scale(1.05);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+
+    .section-title {
+      font-size: 2em;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
     .card {
-      background:#1e293b; border-radius:var(--radius);
-      overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.5);
-      transition:transform .2s ease;
+      display: flex;
+      flex-wrap: wrap;
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transform: translateY(40px);
+      opacity: 0;
+      transition: all 0.8s ease;
     }
-    .card:hover { transform:translateY(-6px); }
-    .thumb { width:100%; height:180px; object-fit:cover; cursor:pointer; }
-    figcaption { padding:12px; }
-    .title { font-weight:bold; margin:0 0 6px 0; }
-    .desc { font-size:13px; color:var(--muted); }
-    .btn {
-      margin-top:8px; background:transparent; border:1px solid var(--accent);
-      color:var(--accent); border-radius:8px; padding:6px 10px; cursor:pointer;
-      font-size:13px;
+
+    .card.show {
+      transform: translateY(0);
+      opacity: 1;
     }
-    .modal {
-      position:fixed; inset:0; background:rgba(0,0,0,0.7);
-      display:none; align-items:center; justify-content:center;
+
+    .card img {
+      width: 100%;
+      max-width: 400px;
+      object-fit: cover;
+      border-radius: var(--radius) 0 0 var(--radius);
+      animation: float 6s ease-in-out infinite;
     }
-    .modal.open { display:flex; }
-    .modal-content {
-      position:relative; background:#000; border-radius:10px; padding:10px;
-      display:flex; flex-direction:column; align-items:center;
+
+    .card-content {
+      flex: 1;
+      padding: 30px;
     }
-    .modal img { max-width:90vw; max-height:80vh; }
-    .close {
-      position:absolute; top:10px; right:14px; border:none; background:none;
-      color:white; font-size:24px; cursor:pointer;
+
+    .card-content h2 {
+      margin-top: 0;
     }
-    .caption { margin-top:8px; color:var(--muted); font-size:14px; }
+
+    .card-content a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .card-content a:hover {
+      color: white;
+      text-shadow: 0 0 6px var(--accent);
+    }
+
+    .list {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    .list li {
+      margin: 5px 0;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px 10px;
+      font-size: 0.9em;
+      border-top: 1px solid #334155;
+    }
+
+    /* Animasi */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Responsif */
+    @media (max-width: 768px) {
+      .card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .card img {
+        border-radius: var(--radius) var(--radius) 0 0;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>Gallery Software</h1>
-      <p>Gambar: <strong>soft1.jpeg</strong>, <strong>soft2.jpeg</strong>, <strong>soft3.jpeg</strong></p>
-    </header>
+  <header>
+    <h1>Software Dan Kegunaannya </h1>
+    <p>Menjelajahi software dari berbagai kategori lengkap dengan kelebihan dan kekurangannya</p>
+    <nav class="navbar">
+      <a href="index.html" class="nav-button">Home</a>
+      <a href="artikel.html" class="nav-button">Artikel</a>
+      <a href="contact.html" class="nav-button">Contact Us</a>
+    </nav>
+  </header>
 
-    <main class="grid">
-      <figure class="card">
-        <img class="thumb" src="soft1.jpeg" alt="Software 1" data-caption="Software 1 — Windows 10">
-        <figcaption>
-          <p class="title">Software 1 — Windows 10</p>
-          <p class="desc">Kelebihan: Mudah digunakan, banyak aplikasi.<br>Kekurangan: Rawan virus, berbayar.</p>
-          <button class="btn" data-src="soft1.jpeg" data-caption="Windows 10 — Sistem operasi populer">Lihat</button>
-        </figcaption>
-      </figure>
+  <nav>
+    <a href="#os">Sistem Operasi</a>
+    <a href="#desain">Aplikasi Desain</a>
+    <a href="#pemrograman">Software Pemrograman</a>
+  </nav>
 
-      <figure class="card">
-        <img class="thumb" src="soft2.jpeg" alt="Software 2" data-caption="Software 2 — Blender">
-        <figcaption>
-          <p class="title">Software 2 — Blender</p>
-          <p class="desc">Kelebihan: Gratis, open source, lengkap.<br>Kekurangan: Agak kompleks untuk pemula.</p>
-          <button class="btn" data-src="soft2.jpeg" data-caption="Blender — Software 3D open source">Lihat</button>
-        </figcaption>
-      </figure>
+  <main>
+    <!-- Sistem Operasi -->
+    <section id="os">
+      <h2 class="section-title">Sistem Operasi</h2>
+      <div class="card">
+        <img src="sof1.jpeg" alt="Windows">
+        <div class="card-content">
+          <h2><a href="Windows.html">1. Windows 10</a></h2>
+          <p><b>Jenis:</b> Sistem Operasi</p>
+          <ul class="list">
+            <li><b>Kelebihan:</b> Mudah digunakan, kompatibel luas, banyak dukungan aplikasi dan game.</li>
+            <li><b>Kekurangan:</b> Berbayar, rawan virus, dan memerlukan spesifikasi tinggi.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-      <figure class="card">
-        <img class="thumb" src="soft3.jpeg" alt="Software 3" data-caption="Software 3 — VS Code">
-        <figcaption>
-          <p class="title">Software 3 — Visual Studio Code</p>
-          <p class="desc">Kelebihan: Ringan, banyak ekstensi.<br>Kekurangan: Perlu plugin tambahan untuk fitur penuh.</p>
-          <button class="btn" data-src="soft3.jpeg" data-caption="VS Code — Editor kode ringan dan fleksibel">Lihat</button>
-        </figcaption>
-      </figure>
-    </main>
-  </div>
+    <!-- Aplikasi Desain -->
+    <section id="desain">
+      <h2 class="section-title">Aplikasi Desain & Animasi</h2>
+      <div class="card">
+        <img src="soft2.png" alt="Blender">
+        <div class="card-content">
+          <h2><a href="Blender.html">2. Blender</a></h2>
+          <p><b>Jenis:</b> Aplikasi Desain & Animasi 3D</p>
+          <ul class="list">
+            <li><b>Kelebihan:</b> Gratis, open source, fitur lengkap (modeling, animasi, rendering, editing).</li>
+            <li><b>Kekurangan:</b> Antarmuka kompleks, berat di PC spesifikasi rendah.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <button class="close" id="closeBtn">✕</button>
-      <img id="modalImg" src="" alt="">
-      <div class="caption" id="modalCaption"></div>
-    </div>
-  </div>
+    <!-- Software Pemrograman -->
+    <section id="pemrograman">
+      <h2 class="section-title">Software Pemrograman</h2>
+      <div class="card">
+        <img src="soft3.png" alt="Visual Studio Code">
+        <div class="card-content">
+          <h2><a href="VScode.html">3. Visual Studio Code</a></h2>
+          <p><b>Jenis:</b> Software Pemrograman</p>
+          <ul class="list">
+            <li><b>Kelebihan:</b> Ringan, banyak ekstensi, mendukung banyak bahasa (JavaScript, Python, dsb).</li>
+            <li><b>Kekurangan:</b> Butuh ekstensi tambahan untuk fitur lengkap, bisa lambat jika banyak plugin aktif.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Dibuat oleh <b>LifeBlog</b> © 2025 — Untuk presentasi edukatif.
+  </footer>
 
   <script>
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modalImg");
-    const modalCaption = document.getElementById("modalCaption");
-    const closeBtn = document.getElementById("closeBtn");
+    // Efek muncul saat di-scroll
+    const cards = document.querySelectorAll('.card');
+    window.addEventListener('scroll', checkCards);
 
-    function openModal(src, caption) {
-      modalImg.src = src;
-      modalCaption.textContent = caption || "";
-      modal.classList.add("open");
-    }
-    function closeModal() {
-      modal.classList.remove("open");
-      modalImg.src = "";
-      modalCaption.textContent = "";
+    function checkCards() {
+      const triggerBottom = window.innerHeight * 0.8;
+      cards.forEach(card => {
+        const cardTop = card.getBoundingClientRect().top;
+        if (cardTop < triggerBottom) {
+          card.classList.add('show');
+        }
+      });
     }
 
-    document.querySelectorAll(".thumb").forEach(img => {
-      img.addEventListener("click", () => openModal(img.src, img.dataset.caption));
-    });
-    document.querySelectorAll(".btn").forEach(btn => {
-      btn.addEventListener("click", () => openModal(btn.dataset.src, btn.dataset.caption));
-    });
-    closeBtn.addEventListener("click", closeModal);
-    modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+    checkCards(); // Jalankan di awal
   </script>
 </body>
 </html>
