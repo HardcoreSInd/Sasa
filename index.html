@@ -1,503 +1,436 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monster RNG Gacha</title>
+    <title>Laporan PKL </title>
     <style>
+        /* Reset dan pengaturan dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #1a1a2e;
-            color: #e6e6e6;
-            text-align: center;
-            padding: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+            font-size: 12pt;
         }
+        
+        /* Container utama */
         .container {
-            max-width: 800px;
+            width: 21cm;
+            min-height: 29.7cm;
             margin: 0 auto;
-            background-color: #16213e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            padding: 2.5cm 2.5cm 2.5cm 3cm; /* Margin kiri lebih besar untuk binding */
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: #f8bb22;
-            margin-bottom: 30px;
+        
+        /* Halaman sampul */
+        .cover-page {
+            text-align: center;
+            padding-top: 8cm;
         }
-        .gacha-button {
-            background-color: #e94560;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            margin: 20px 0;
-            transition: all 0.3s;
-            font-weight: bold;
+        
+        .cover-page h1 {
+            font-size: 16pt;
+            text-transform: uppercase;
+            margin-bottom: 1.5cm;
         }
-        .gacha-button:hover {
-            background-color: #ff6b81;
-            transform: scale(1.05);
+        
+        .cover-page h2 {
+            font-size: 14pt;
+            margin-bottom: 2cm;
         }
-        .result {
-            margin: 30px 0;
-            padding: 20px;
-            background-color: #0f3460;
-            border-radius: 10px;
-            min-height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        
+        .cover-page .logo {
+            margin-bottom: 1.5cm;
         }
-        .result-item {
-            font-size: 24px;
-            font-weight: bold;
-            color: #f8bb22;
-            margin: 10px 0;
+        
+        .cover-page .student-info {
+            margin-bottom: 2cm;
         }
-        .result-rarity {
-            font-size: 16px;
-            color: #e94560;
-            margin-top: 5px;
+        
+        .cover-page .institution-info {
+            margin-top: 3cm;
         }
-        .luck-meter {
-            margin: 20px 0;
-            background-color: #0f3460;
-            padding: 15px;
-            border-radius: 10px;
+        
+        /* Halaman pengesahan */
+        .approval-page {
+            padding-top: 5cm;
         }
-        .luck-bar {
-            height: 20px;
-            background-color: #1a1a2e;
-            border-radius: 10px;
-            margin: 10px 0;
-            overflow: hidden;
+        
+        .approval-page h2 {
+            text-align: center;
+            margin-bottom: 1.5cm;
+            text-decoration: underline;
         }
-        .luck-progress {
-            height: 100%;
-            background: linear-gradient(90deg, #4e54c8, #8f94fb);
-            width: 0%;
-            transition: width 0.5s;
+        
+        .approval-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2cm;
         }
-        .luck-level {
-            font-size: 18px;
+        
+        .approval-table td {
+            padding: 8px;
+            vertical-align: top;
+        }
+        
+        .signature-area {
+            margin-top: 2cm;
+            text-align: center;
+        }
+        
+        .signature-box {
+            display: inline-block;
+            width: 6cm;
+            margin: 0 1cm;
+        }
+        
+        /* Halaman daftar isi */
+        .toc-page h2 {
+            text-align: center;
+            margin-bottom: 1.5cm;
+        }
+        
+        .toc-list {
+            list-style-type: none;
+        }
+        
+        .toc-list li {
             margin-bottom: 5px;
         }
-        .luck-button {
-            background-color: #4e54c8;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            transition: all 0.3s;
+        
+        .toc-list .chapter {
+            font-weight: bold;
         }
-        .luck-button:hover {
-            background-color: #8f94fb;
+        
+        .toc-list .page-number {
+            float: right;
         }
-        .inventory {
-            margin-top: 30px;
-            background-color: #0f3460;
-            padding: 15px;
-            border-radius: 10px;
+        
+        /* Bab dan sub-bab */
+        .chapter {
+            margin-top: 1.5cm;
+            margin-bottom: 1cm;
         }
-        .inventory h3 {
-            margin-top: 0;
-            color: #f8bb22;
+        
+        .chapter h2 {
+            text-align: center;
+            margin-bottom: 1cm;
+            text-transform: uppercase;
         }
-        .inventory-items {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+        
+        .section {
+            margin-top: 1cm;
+            margin-bottom: 0.5cm;
         }
-        .inventory-item {
-            background-color: #1a1a2e;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 14px;
+        
+        .section h3 {
+            margin-bottom: 0.5cm;
         }
-        .rarity-normal {
-            color: #a0a0a0;
+        
+        .subsection {
+            margin-top: 0.5cm;
+            margin-bottom: 0.3cm;
         }
-        .rarity-uncommon {
-            color: #4CAF50;
+        
+        .subsection h4 {
+            margin-bottom: 0.3cm;
         }
-        .rarity-rare {
-            color: #2196F3;
+        
+        /* Paragraf dan teks */
+        p {
+            text-align: justify;
+            margin-bottom: 0.5cm;
+            text-indent: 1.27cm;
         }
-        .rarity-epic {
-            color: #9C27B0;
+        
+        /* Tabel */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5cm 0;
         }
-        .rarity-legendary {
-            color: #FF9800;
+        
+        table, th, td {
+            border: 1px solid #333;
         }
-        .rarity-mythic {
-            color: #f44336;
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
         }
-        .rarity-cosmic {
-            color: #ff00ff;
-            text-shadow: 0 0 5px #ff00ff;
+        
+        th {
+            background-color: #f2f2f2;
         }
-        .rarity-secret {
-            color: #00ffff;
-            text-shadow: 0 0 5px #00ffff;
-            animation: glow 1.5s infinite alternate;
+        
+        /* Gambar */
+        .figure {
+            text-align: center;
+            margin: 0.5cm 0;
         }
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
-            }
-            to {
-                text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
-            }
+        
+        .figure img {
+            max-width: 100%;
+            height: auto;
         }
-        .cosmic-effect {
-            background: radial-gradient(circle, rgba(255,0,255,0.2) 0%, rgba(0,0,0,0) 70%);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 10px 0;
+        
+        .figure-caption {
+            font-style: italic;
+            margin-top: 5px;
         }
-        .secret-effect {
-            background: radial-gradient(circle, rgba(0,255,255,0.2) 0%, rgba(0,0,0,0) 70%);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 10px 0;
+        
+        /* Daftar pustaka */
+        .references {
+            margin-top: 1cm;
+        }
+        
+        .references h2 {
+            text-align: center;
+            margin-bottom: 1cm;
+        }
+        
+        .reference-item {
+            margin-bottom: 0.5cm;
+            text-indent: -1.27cm;
+            padding-left: 1.27cm;
+        }
+        
+        /* Halaman kosong untuk pencetakan */
+        .page-break {
+            page-break-after: always;
+        }
+        
+        /* Header dan footer */
+        @page {
+            margin: 0;
+        }
+        
+        .header, .footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10pt;
+        }
+        
+        .header {
+            top: 1cm;
+        }
+        
+        .footer {
+            bottom: 1cm;
+        }
+        
+        /* Untuk nomor halaman */
+        .page-number:after {
+            content: counter(page);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>MONSTER RNG GACHA</h1>
-        
-        <div class="luck-meter">
-            <div class="luck-level">Luck Level: <span id="luck-level">1</span></div>
-            <div class="luck-bar">
-                <div class="luck-progress" id="luck-progress"></div>
+        <!-- Halaman Sampul -->
+        <div class="cover-page">
+            <div class="logo">
+                <!-- Tempat untuk logo universitas -->
+                <img src="logo-universitas.png" alt="Logo Universitas" width="100">
             </div>
-            <p>Luck increases your chances for better items!</p>
-            <button class="luck-button" id="increase-luck">Increase Luck (+1)</button>
-            <button class="luck-button" id="reset-luck">Reset Luck</button>
-            <p>Current Luck Multiplier: <span id="luck-multiplier">1x</span></p>
+            <h1>LAPORAN PRAKTIK KERJA LAPANGAN</h1>
+            <h2>Judul Laporan PKL</h2>
+            <div class="student-info">
+                <p>Disusun oleh:</p>
+                <p><strong>[Nama]</strong></p>
+                <p>[NIM]</p>
+            </div>
+            <div class="institution-info">
+                <p><strong>PROGRAM  []</strong></p>
+                <p><strong>FAKULTAS []</strong></p>
+                <p><strong>[NAMA UNIVERSITAS]</strong></p>
+                <p><strong>[bogor]</strong></p>
+                <p><strong>[2025]</strong></p>
+            </div>
         </div>
         
-        <button class="gacha-button" id="gacha-button">ROLL GACHA (1,268m Max Chance)</button>
+        <div class="page-break"></div>
         
-        <div class="result" id="result">
-            <p>Roll the gacha to see what you get!</p>
+        <!-- Halaman Pengesahan -->
+        <div class="approval-page">
+            <h2>HALAMAN PENGESAHAN</h2>
+            <table class="approval-table">
+                <tr>
+                    <td width="30%">Nama</td>
+                    <td width="70%">: [Nama Lengkap Mahasiswa]</td>
+                </tr>
+                <tr>
+                    <td>NIM</td>
+                    <td>: [NIM]</td>
+                </tr>
+                <tr>
+                    <td>Program Studi</td>
+                    <td>: [Nama Program Studi]</td>
+                </tr>
+                <tr>
+                    <td>Judul Laporan PKL</td>
+                    <td>: [Judul Laporan PKL]</td>
+                </tr>
+                <tr>
+                    <td>Lokasi PKL</td>
+                    <td>: [Nama Perusahaan/Instansi]</td>
+                </tr>
+                <tr>
+                    <td>Waktu Pelaksanaan</td>
+                    <td>: [Tanggal Mulai] s/d [Tanggal Selesai]</td>
+                </tr>
+            </table>
+            
+            <p>Laporan PKL ini telah disetujui dan disahkan pada:</p>
+            <p>Tanggal: [Tanggal Pengesahan]</p>
+            
+            <div class="signature-area">
+                <div class="signature-box">
+                    <p>Pembimbing PKL</p>
+                    <br><br><br>
+                    <p><strong>[Nama Pembimbing]</strong></p>
+                    <p>NIP. [NIP Pembimbing]</p>
+                </div>
+                
+                <div class="signature-box">
+                    <p>Koordinator PKL</p>
+                    <br><br><br>
+                    <p><strong>[Nama Koordinator]</strong></p>
+                    <p>NIP. [NIP Koordinator]</p>
+                </div>
+            </div>
         </div>
         
-        <div class="inventory">
-            <h3>Your Inventory</h3>
-            <div class="inventory-items" id="inventory">
-                <p>Your items will appear here</p>
+        <div class="page-break"></div>
+        
+        <!-- Halaman Daftar Isi -->
+        <div class="toc-page">
+            <h2>DAFTAR ISI</h2>
+            <ul class="toc-list">
+                <li><span class="chapter">BAB I PENDAHULUAN</span><span class="page-number">1</span></li>
+                <li>&nbsp;&nbsp;&nbsp;1.1 Latar Belakang<span class="page-number">1</span></li>
+                <li>&nbsp;&nbsp;&nbsp;1.2 Tujuan PKL<span class="page-number">2</span></li>
+                <li>&nbsp;&nbsp;&nbsp;1.3 Manfaat PKL<span class="page-number">3</span></li>
+                <li><span class="chapter">BAB II TINJAUAN PUSTAKA</span><span class="page-number">4</span></li>
+                <li>&nbsp;&nbsp;&nbsp;2.1 Teori Dasar<span class="page-number">4</span></li>
+                <li>&nbsp;&nbsp;&nbsp;2.2 Konsep Terkait<span class="page-number">6</span></li>
+                <li><span class="chapter">BAB III METODOLOGI</span><span class="page-number">8</span></li>
+                <li>&nbsp;&nbsp;&nbsp;3.1 Waktu dan Tempat<span class="page-number">8</span></li>
+                <li>&nbsp;&nbsp;&nbsp;3.2 Metode Pengumpulan Data<span class="page-number">9</span></li>
+                <li>&nbsp;&nbsp;&nbsp;3.3 Metode Analisis Data<span class="page-number">10</span></li>
+                <li><span class="chapter">BAB IV HASIL DAN PEMBAHASAN</span><span class="page-number">12</span></li>
+                <li>&nbsp;&nbsp;&nbsp;4.1 Deskripsi Lokasi PKL<span class="page-number">12</span></li>
+                <li>&nbsp;&nbsp;&nbsp;4.2 Kegiatan yang Dilakukan<span class="page-number">14</span></li>
+                <li>&nbsp;&nbsp;&nbsp;4.3 Analisis Hasil<span class="page-number">16</span></li>
+                <li><span class="chapter">BAB V PENUTUP</span><span class="page-number">18</span></li>
+                <li>&nbsp;&nbsp;&nbsp;5.1 Kesimpulan<span class="page-number">18</span></li>
+                <li>&nbsp;&nbsp;&nbsp;5.2 Saran<span class="page-number">19</span></li>
+                <li><span class="chapter">DAFTAR PUSTAKA</span><span class="page-number">20</span></li>
+                <li><span class="chapter">LAMPIRAN</span><span class="page-number">21</span></li>
+            </ul>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <!-- Bab I: Pendahuluan -->
+        <div class="chapter">
+            <h2>BAB I<br>PENDAHULUAN</h2>
+            
+            <div class="section">
+                <h3>1.1 Latar Belakang</h3>
+                <p>Paragraf pertama berisi latar belakang pelaksanaan PKL. Jelaskan mengapa PKL ini penting untuk dilakukan dan bagaimana hubungannya dengan bidang studi yang sedang ditempuh.</p>
+                <p>Paragraf kedua dapat berisi penjelasan lebih lanjut tentang konteks PKL, termasuk gambaran umum tentang perusahaan atau instansi tempat PKL dilaksanakan.</p>
+            </div>
+            
+            <div class="section">
+                <h3>1.2 Tujuan PKL</h3>
+                <p>Jelaskan tujuan-tujuan yang ingin dicapai melalui pelaksanaan PKL ini. Tujuan dapat dibagi menjadi tujuan umum dan tujuan khusus.</p>
+                <p>Contoh:</p>
+                <ul>
+                    <li>Mengaplikasikan ilmu yang telah diperoleh di bangku kuliah ke dalam situasi kerja yang nyata.</li>
+                    <li>Memperoleh pengalaman kerja yang relevan dengan bidang studi.</li>
+                    <li>Mengembangkan keterampilan profesional dan soft skills.</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3>1.3 Manfaat PKL</h3>
+                <p>Jelaskan manfaat yang diperoleh dari pelaksanaan PKL, baik bagi mahasiswa, perguruan tinggi, maupun perusahaan/instansi tempat PKL dilaksanakan.</p>
+            </div>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <!-- Contoh tabel -->
+        <div class="section">
+            <h3>Contoh Tabel</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Kegiatan</th>
+                        <th>Waktu</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Orientasi Perusahaan</td>
+                        <td>Minggu 1</td>
+                        <td>Pengenalan struktur organisasi dan budaya perusahaan</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Pelatihan Sistem</td>
+                        <td>Minggu 2</td>
+                        <td>Pelatihan penggunaan sistem internal perusahaan</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Proyek Utama</td>
+                        <td>Minggu 3-7</td>
+                        <td>Pelaksanaan proyek yang ditugaskan</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Contoh gambar -->
+        <div class="section">
+            <h3>Contoh Gambar</h3>
+            <div class="figure">
+                <img src="placeholder-image.png" alt="Deskripsi gambar">
+                <div class="figure-caption">Gambar 1.1: Struktur Organisasi Perusahaan</div>
+            </div>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <!-- Daftar Pustaka -->
+        <div class="references">
+            <h2>DAFTAR PUSTAKA</h2>
+            
+            <div class="reference-item">
+                [1] Nama Penulis. (Tahun). Judul Buku. Kota: Penerbit.
+            </div>
+            <div class="reference-item">
+                [2] Nama Penulis. (Tahun). "Judul Artikel". Nama Jurnal, Volume(Nomor), Halaman.
+            </div>
+            <div class="reference-item">
+                [3] Nama Situs. (Tahun). Judul Halaman Web. Diakses dari: URL (Tanggal Akses).
             </div>
         </div>
     </div>
-
-    <script>
-        // Gacha items with their base chances
-        const items = [
-            { name: "Normal", chance: 500000, rarity: "normal" },
-            { name: "Strong", chance: 250000, rarity: "uncommon" },
-            { name: "Sharps", chance: 250000, rarity: "uncommon" },
-            { name: "Balls", chance: 100000, rarity: "rare" },
-            { name: "Stick", chance: 50000, rarity: "rare" },
-            { name: "Bow", chance: 25000, rarity: "epic" },
-            { name: "Sword", chance: 20000, rarity: "epic" },
-            { name: "Balls (Mutated)", chance: 15000, rarity: "epic" },
-            { name: "Gun", chance: 20000, rarity: "epic" },
-            { name: "Stick (Mutated)", chance: 8000, rarity: "legendary" },
-            { name: "Fire", chance: 6500, rarity: "legendary" },
-            { name: "Water", chance: 6500, rarity: "legendary" },
-            { name: "Grass", chance: 6000, rarity: "legendary" },
-            { name: "Crystal", chance: 1000, rarity: "mythic" },
-            { name: "Sniper", chance: 10000, rarity: "legendary" },
-            { name: "Shurikens", chance: 40000, rarity: "rare" },
-            { name: "Pedang Catur", chance: 1000, rarity: "mythic" },
-            { name: "tombak kemerdekan", chance: 8000, rarity: "legendary" },
-            { name: "pentungan Fire", chance: 1500, rarity: "legendary"},
-            { name: "Cosmic Blade", chance: 500, rarity: "cosmic" },
-            { name: "Galactic Shield", chance: 500, rarity: "cosmic" },
-            { name: "Secret Artifact", chance: 100, rarity: "secret" },
-            { name: "Forbidden Scroll", chance: 100, rarity: "secret" }
-        ];
-
-        // Game state
-        let luckLevel = 1;
-        let luckPoints = 0;
-        const maxLuckLevel = 10;
-        const luckPointsNeeded = [0, 5, 15, 30, 50, 75, 105, 140, 180, 225, 275];
-        let inventory = [];
-        
-        // DOM elements
-        const gachaButton = document.getElementById('gacha-button');
-        const resultDiv = document.getElementById('result');
-        const increaseLuckBtn = document.getElementById('increase-luck');
-        const resetLuckBtn = document.getElementById('reset-luck');
-        const luckLevelSpan = document.getElementById('luck-level');
-        const luckProgress = document.getElementById('luck-progress');
-        const luckMultiplierSpan = document.getElementById('luck-multiplier');
-        const inventoryDiv = document.getElementById('inventory');
-        
-        // Initialize
-        updateLuckUI();
-        
-        // Event listeners
-        gachaButton.addEventListener('click', rollGacha);
-        increaseLuckBtn.addEventListener('click', increaseLuck);
-        resetLuckBtn.addEventListener('click', resetLuck);
-        
-        // Gacha function
-        function rollGacha() {
-            // Calculate total chance with luck modifier
-            const luckMultiplier = 1 + (luckLevel * 0.1);
-            let totalChance = 0;
-            
-            // Create weighted items array with luck applied to rare items
-            const weightedItems = items.map(item => {
-                let weightedChance = item.chance;
-                
-                // Apply luck multiplier to items that aren't "Normal"
-                if (item.name !== "Normal") {
-                    weightedChance *= luckMultiplier;
-                }
-                
-                // Extra boost for cosmic and secret items at higher luck levels
-                if (item.rarity === "cosmic" || item.rarity === "secret") {
-                    weightedChance *= (1 + (luckLevel * 0.05));
-                }
-                
-                totalChance += weightedChance;
-                return {
-                    name: item.name,
-                    chance: weightedChance,
-                    rarity: item.rarity
-                };
-            });
-            
-            // Generate a random number within the total chance
-            const random = Math.random() * totalChance;
-            
-            // Find which item corresponds to the random number
-            let cumulativeChance = 0;
-            let selectedItem = null;
-            
-            for (const item of weightedItems) {
-                cumulativeChance += item.chance;
-                if (random <= cumulativeChance) {
-                    selectedItem = item;
-                    break;
-                }
-            }
-            
-            // Add to inventory
-            inventory.push(selectedItem);
-            
-            // Display result with special effects for cosmic/secret
-            displayResult(selectedItem);
-            
-            // Update inventory display
-            updateInventory();
-            
-            // Add luck points based on item rarity
-            switch(selectedItem.rarity) {
-                case "normal":
-                    luckPoints += 1;
-                    break;
-                case "uncommon":
-                    luckPoints += 2;
-                    break;
-                case "rare":
-                    luckPoints += 3;
-                    break;
-                case "epic":
-                    luckPoints += 5;
-                    break;
-                case "legendary":
-                    luckPoints += 8;
-                    break;
-                case "mythic":
-                    luckPoints += 15;
-                    break;
-                case "cosmic":
-                    luckPoints += 25;
-                    break;
-                case "secret":
-                    luckPoints += 50;
-                    break;
-            }
-            
-            // Check if luck level can be increased
-            if (luckLevel < maxLuckLevel && luckPoints >= luckPointsNeeded[luckLevel + 1]) {
-                luckLevel++;
-                updateLuckUI();
-                alert(`Luck Level Increased to ${luckLevel}!`);
-            } else {
-                updateLuckUI();
-            }
-        }
-        
-        // Display the gacha result
-        function displayResult(item) {
-            let rarityClass = "";
-            let rarityName = "";
-            let effectClass = "";
-            
-            switch(item.rarity) {
-                case "normal":
-                    rarityClass = "rarity-normal";
-                    rarityName = "Normal";
-                    break;
-                case "uncommon":
-                    rarityClass = "rarity-uncommon";
-                    rarityName = "Uncommon";
-                    break;
-                case "rare":
-                    rarityClass = "rarity-rare";
-                    rarityName = "Rare";
-                    break;
-                case "epic":
-                    rarityClass = "rarity-epic";
-                    rarityName = "Epic";
-                    break;
-                case "legendary":
-                    rarityClass = "rarity-legendary";
-                    rarityName = "Legendary";
-                    break;
-                case "mythic":
-                    rarityClass = "rarity-mythic";
-                    rarityName = "Mythic";
-                    break;
-                case "cosmic":
-                    rarityClass = "rarity-cosmic";
-                    rarityName = "Cosmic";
-                    effectClass = "cosmic-effect";
-                    break;
-                case "secret":
-                    rarityClass = "rarity-secret";
-                    rarityName = "Secret";
-                    effectClass = "secret-effect";
-                    break;
-            }
-            
-            let resultHTML = `
-                <div class="${effectClass}">
-                    <div class="result-item ${rarityClass}">${item.name}</div>
-                    <div class="result-rarity">${rarityName}</div>
-                </div>
-            `;
-            
-            // Special celebration for cosmic/secret items
-            if (item.rarity === "cosmic" || item.rarity === "secret") {
-                resultHTML += `<p>✨ AMAZING PULL! ✨</p>`;
-                
-                // Play a sound if available (you would need to add sound files)
-                try {
-                    const audio = new Audio(item.rarity === "cosmic" ? 'cosmic_sound.mp3' : 'secret_sound.mp3');
-                    audio.volume = 0.5;
-                    audio.play().catch(e => console.log("Audio play failed:", e));
-                } catch (e) {
-                    console.log("Audio error:", e);
-                }
-            }
-            
-            resultDiv.innerHTML = resultHTML;
-        }
-        
-        // Increase luck level
-        function increaseLuck() {
-            if (luckLevel < maxLuckLevel && luckPoints >= luckPointsNeeded[luckLevel + 1]) {
-                luckLevel++;
-                updateLuckUI();
-                alert(`Luck Level Increased to ${luckLevel}!`);
-            } else {
-                alert(`You need ${luckPointsNeeded[luckLevel + 1] - luckPoints} more luck points to reach level ${luckLevel + 1}`);
-            }
-        }
-        
-        // Reset luck level
-        function resetLuck() {
-            if (confirm("Are you sure you want to reset your luck level? You'll lose all progress.")) {
-                luckLevel = 1;
-                luckPoints = 0;
-                updateLuckUI();
-            }
-        }
-        
-        // Update luck UI
-        function updateLuckUI() {
-            luckLevelSpan.textContent = luckLevel;
-            
-            if (luckLevel < maxLuckLevel) {
-                const currentPoints = luckPoints - luckPointsNeeded[luckLevel];
-                const neededPoints = luckPointsNeeded[luckLevel + 1] - luckPointsNeeded[luckLevel];
-                const progressPercent = (currentPoints / neededPoints) * 100;
-                luckProgress.style.width = `${progressPercent}%`;
-            } else {
-                luckProgress.style.width = "100%";
-            }
-            
-            const luckMultiplier = 1 + (luckLevel * 0.1);
-            luckMultiplierSpan.textContent = `${luckMultiplier.toFixed(1)}x`;
-        }
-        
-        // Update inventory display
-        function updateInventory() {
-            if (inventory.length === 0) {
-                inventoryDiv.innerHTML = "<p>Your items will appear here</p>";
-                return;
-            }
-            
-            // Count items by type
-            const itemCounts = {};
-            inventory.forEach(item => {
-                const key = `${item.name}|${item.rarity}`;
-                itemCounts[key] = (itemCounts[key] || 0) + 1;
-            });
-            
-            // Create inventory display
-            let inventoryHTML = "";
-            for (const key in itemCounts) {
-                const [name, rarity] = key.split("|");
-                const count = itemCounts[key];
-                let rarityClass = "";
-                
-                switch(rarity) {
-                    case "normal":
-                        rarityClass = "rarity-normal";
-                        break;
-                    case "uncommon":
-                        rarityClass = "rarity-uncommon";
-                        break;
-                    case "rare":
-                        rarityClass = "rarity-rare";
-                        break;
-                    case "epic":
-                        rarityClass = "rarity-epic";
-                        break;
-                    case "legendary":
-                        rarityClass = "rarity-legendary";
-                        break;
-                    case "mythic":
-                        rarityClass = "rarity-mythic";
-                        break;
-                    case "cosmic":
-                        rarityClass = "rarity-cosmic";
-                        break;
-                    case "secret":
-                        rarityClass = "rarity-secret";
-                        break;
-                }
-                
-                inventoryHTML += `<div class="inventory-item ${rarityClass}">${name} ×${count}</div>`;
-            }
-            
-            inventoryDiv.innerHTML = inventoryHTML;
-        }
-    </script>
 </body>
 </html>
